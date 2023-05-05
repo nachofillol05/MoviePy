@@ -1,26 +1,16 @@
-# Marcdown 101 
-Este es mi primer archivo de markdown
+# Proyecto de MoviePy
+Este es un proyecto escolar en python donde presentaremos la librería MoviePy instalada en un enviroment
 ---
 ## instalacion
-```py
-print('Hola')
-for i in range():
-    print('Hola como andas')
+```console
+    pip install moviepy
 ```
-### Listas
-- 1
-- 2
-    - 2,5
-        - 2,8
-- 3
-- 4
+### Integrantes
+- Ceballos Franco
+- Fillol Ignacio
+- Miller Derek
   
-1. hola
-2. hola
-3. hola
-
-
 
 
 ## Mostrar imagenes
-![memoria ram ocupada](/Captura%20desde%202023-03-20%2008-52-06.png "memoria ram ocupada")
+![gatito](/gato.jpeg "foto de gato")
