@@ -7,6 +7,7 @@ os.environ["IMAGEIO_CONVERTER"] = r"/home/nacho/Descargas/magick"  # reemplaza l
 
 
 
+
 class VideoEditor(QMainWindow):
     def __init__(self):
         super().__init__()
