@@ -1,5 +1,5 @@
 # Proyecto de MoviePy
-Este es un proyecto escolar en python donde presentaremos la librería MoviePy instalada en un enviroment
+This is a scolar proyect using python with the MoviePy as a library
 ---
 ## instalacion
 ```console
