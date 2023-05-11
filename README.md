@@ -1,11 +1,11 @@
-# Proyecto de MoviePy
-This is a scolar proyect using python with the MoviePy as a library ceballos 
+# MoviePy Proyect
+This is a scolar proyect using python with the MoviePy as a library
 ---
-## instalacion
+## instalation
 ```console
     pip install moviepy
 ```
-### Integrantes
+### Participants
 - Ceballos Franco
 - Fillol Ignacio
 - Miller Derek
