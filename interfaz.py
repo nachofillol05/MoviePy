@@ -2,33 +2,6 @@ from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QWidget, QHBoxLay
 from PyQt5.QtGui import QPixmap
 import sys
 from moviepy.editor import *
-import os
-os.environ["IMAGEIO_CONVERTER"] = r"/home/nacho/Descargas/magick"  # reemplaza la ruta con la ubicación real del binario de ImageMagick
-
-
-
-
-class VideoEditor(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("MoviePy Video Editor")
-        self.setGeometry(100, 100, 800, 600)
-
-
-class VideoEditor(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("MoviePy Video Editor")
-        self.setGeometry(100, 100, 800, 600)
-        
-        self.play_button = QPushButton("Play", self)
-        self.play_button.setGeometry(50, 50, 100, 30)
-        self.play_button.clicked.connect(self.play_video)
-        
-        self.open_button = QPushButton("Open", self)
-        self.open_button.setGeometry(200, 50, 100, 30)
-        self.open_button.clicked.connect(self.open_file_dialog)
-
 
 class VideoEditor(QMainWindow):
     def __init__(self):
@@ -52,10 +25,10 @@ class VideoEditor(QMainWindow):
         self.video_widget = QLabel(self)
         self.video_widget.setGeometry(50, 100, 700, 400)
         self.video_widget.setStyleSheet("border: 1px solid black")
-        
-        self.video_widget = QLabel(self)
-        self.video_widget.setGeometry(50, 100, 700, 400)
-        self.video_widget.setStyleSheet("border: 1px solid black")
+                    
+        self.rotate_button = QPushButton("Rotate", self)
+        self.rotate_button.setGeometry(500, 50, 100, 30)
+        self.rotate_button.clicked.connect(self.rotate)
         
         self.video = None
     
@@ -74,9 +47,30 @@ class VideoEditor(QMainWindow):
                 video_with_title = CompositeVideoClip([self.video, title_clip.set_pos(('center', 'top'))])
                 self.video = video_with_title
     
+    def rotate(self):
+        self.video.rotation(90)
+        self.video.preview()
+        """
+        grados = 0
+        if self.video is not None:
+            try:
+                resultado = QInputDialog.getText(self, "Rotate", "Cuantos grados:(Numero porfavor)")#es ua tupla
+                grados = int(resultado[0])
+                
+            except ValueError:
+                print("Ingrese un numero")
+            if grados != 0:
+                print("lklegueeeeeeeee")
+                
+                    
+        """
+                
+                
     def play_video(self):
         if self.video is not None:
             self.video.preview()
+            
+            #without audio, cortar, 
 
 
 if __name__ == "__main__":
@@ -84,3 +78,4 @@ if __name__ == "__main__":
     editor = VideoEditor()
     editor.show()
     sys.exit(app.exec_())
+    
