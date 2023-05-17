@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QWidget, QHBoxLay
 from PyQt5.QtGui import QPixmap
 import sys
 from moviepy.editor import *
-import moviepy
 
 class VideoEditor(QMainWindow):
     def __init__(self):
@@ -18,9 +17,17 @@ class VideoEditor(QMainWindow):
         self.title_button.setGeometry(350, 50, 100, 30)
         self.title_button.clicked.connect(self.add_title)
         
+        self.volume_button = QPushButton("Volume", self)
+        self.volume_button.setGeometry(650, 50, 100, 30)
+        self.volume_button.clicked.connect(self.open_volume_dialog)
+                
         self.open_button = QPushButton("Open", self)
         self.open_button.setGeometry(200, 50, 100, 30)
         self.open_button.clicked.connect(self.open_file_dialog)
+
+        self.open_button = QPushButton("Add Clip", self)
+        self.open_button.setGeometry(800, 50, 100, 30)
+        self.open_button.clicked.connect(self.open_clip_dialog)
         
         self.label_ubicacion = QLabel(self)
         self.label_ubicacion.setText("ingrese la ruta del archivo")
@@ -54,6 +61,15 @@ class VideoEditor(QMainWindow):
         if file_dialog.exec_() == QFileDialog.Accepted:
             self.file_path = file_dialog.selectedFiles()[0]
             self.video = VideoFileClip(self.file_path)
+# soy gay
+    def open_clip_dialog(self):
+        if self.video is not None:
+            file_dialog = QFileDialog(self)
+            file_dialog.setNameFilter("Video Files (*.mp4 *.avi)")
+            if file_dialog.exec_() == QFileDialog.Accepted:
+                file_path = file_dialog.selectedFiles()[0]
+                self.clip = VideoFileClip(file_path)
+                self.video = concatenate_videoclips([self.video,self.clip])
             self.label_ubicacion.setText(self.file_path)
             self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
             
@@ -111,8 +127,12 @@ class VideoEditor(QMainWindow):
             self.video.write_videofile("jose.mp4")
             self.label_finalizado.setText("Se termino de guardar el video")
             self.video.preview()
-            
-            #without audio, cortar, 
+
+    def open_volume_dialog(self):
+        if self.video is not None:
+            volume, ok = QInputDialog.getText(self, "Change Volume", "Enter New Volume:")
+            if ok:
+                self.video = self.video.volumex(volume)
 
 
 if __name__ == "__main__":
