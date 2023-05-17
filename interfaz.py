@@ -17,10 +17,12 @@ class VideoEditor(QMainWindow):
         self.title_button.setGeometry(350, 50, 100, 30)
         self.title_button.clicked.connect(self.add_title)
         
-                
         self.open_button = QPushButton("Open", self)
         self.open_button.setGeometry(200, 50, 100, 30)
         self.open_button.clicked.connect(self.open_file_dialog)
+        self.label_ubicacion = QLabel(self)
+        self.label_ubicacion.setText("ingrese la ruta del archivo")
+        self.label_ubicacion.setGeometry(200, 20, 500, 30)
         
         self.video_widget = QLabel(self)
         self.video_widget.setGeometry(50, 100, 700, 400)
@@ -36,8 +38,9 @@ class VideoEditor(QMainWindow):
         file_dialog = QFileDialog(self)
         file_dialog.setNameFilter("Video Files (*.mp4 *.avi)")
         if file_dialog.exec_() == QFileDialog.Accepted:
-            file_path = file_dialog.selectedFiles()[0]
-            self.video = VideoFileClip(file_path)
+            self.file_path = file_dialog.selectedFiles()[0]
+            self.video = VideoFileClip(self.file_path)
+            self.label_ubicacion.setText(self.file_path)
             
     def add_title(self):
         if self.video is not None:
@@ -48,9 +51,10 @@ class VideoEditor(QMainWindow):
                 self.video = video_with_title
     
     def rotate(self):
-        self.video.rotation(90)
-        self.video.preview()
-        """
+        #?????????
+        
+        
+        
         grados = 0
         if self.video is not None:
             try:
@@ -61,14 +65,19 @@ class VideoEditor(QMainWindow):
                 print("Ingrese un numero")
             if grados != 0:
                 print("lklegueeeeeeeee")
+                self.video = self.video.rotate(grados)
                 
                     
-        """
+        
                 
                 
     def play_video(self):
+        #self.modified_video.preview()
         if self.video is not None:
+            #
+            self.video.write_videofile("jose.mp4")
             self.video.preview()
+            self.video.close()
             
             #without audio, cortar, 
 
