@@ -8,11 +8,11 @@ class VideoEditor(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("MoviePy Video Editor")
-        self.setGeometry(100, 100, 800, 150)
+        self.setGeometry(100, 100, 900, 150)
         
-        self.play_button = QPushButton("Save", self)
-        self.play_button.setGeometry(50, 50, 100, 30)
-        self.play_button.clicked.connect(self.save_video)
+        self.save_button = QPushButton("Save", self)
+        self.save_button.setGeometry(50, 50, 100, 30)
+        self.save_button.clicked.connect(self.save_video)
         
         self.title_button = QPushButton("Add Title", self)
         self.title_button.setGeometry(350, 50, 100, 30)
@@ -38,9 +38,13 @@ class VideoEditor(QMainWindow):
         self.rotate_button.setGeometry(500, 50, 100, 30)
         self.rotate_button.clicked.connect(self.rotate)
         
-        self.rotate_button = QPushButton("Hacer gif", self)
-        self.rotate_button.setGeometry(650, 50, 100, 30)
-        self.rotate_button.clicked.connect(self.gif)
+        self.cut_button = QPushButton("Cut Video", self)
+        self.cut_button.setGeometry(500, 50, 125, 30)
+        self.cut_button.clicked.connect(self.cutvideo)
+
+        self.gif_button = QPushButton("Hacer gif", self)
+        self.gif_button.setGeometry(650, 50, 100, 30)
+        self.gif_button.clicked.connect(self.gif)
         
         self.video = None
     
@@ -87,9 +91,19 @@ class VideoEditor(QMainWindow):
                 print("lklegueeeeeeeee")
                 self.video = self.video.rotate(grados)
                 
-                    
+    def cutvideo(self):
+        if self.video is not None:
+            resultadoseg = QInputDialog.getText(self, "Cut video", "Cuantos segundos quiere cortar:(ingresar entre que segundo y que segundo quiere cortar el video asi   por EJ: (20,60). )")
+            segundos = int(resultadoseg[0,0])
         
-                
+        if segundos != [0,0]:
+            cut_video_1 = VideoFileClip(self.video).subclip(segundos)
+
+
+            # use write_videofile() to save the file
+            cut_video_1.write_videofile("cut_video_1.mp4")
+
+                        
                 
     def save_video(self):
         self.label_finalizado.setText("Procesando el video...")
