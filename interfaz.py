@@ -7,7 +7,7 @@ class VideoEditor(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("MoviePy Video Editor")
-        self.setGeometry(100, 100, 1100, 150)
+        self.setGeometry(100, 100, 1250, 150)
         
         self.save_button = QPushButton("Save", self)
         self.save_button.setGeometry(50, 50, 100, 30)
@@ -20,6 +20,10 @@ class VideoEditor(QMainWindow):
         self.volume_button = QPushButton("Volume", self)
         self.volume_button.setGeometry(950, 50, 100, 30)
         self.volume_button.clicked.connect(self.open_volume_dialog)
+
+        self.audiont_button = QPushButton("Remove Audio", self)
+        self.audiont_button.setGeometry(1100, 50, 100, 30)
+        self.audiont_button.clicked.connect(self.remove_audio)
                 
         self.open_button = QPushButton("Open", self)
         self.open_button.setGeometry(200, 50, 100, 30)
@@ -62,14 +66,13 @@ class VideoEditor(QMainWindow):
 
     def open_clip_dialog(self):
         if self.video is not None:
+            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
             file_dialog = QFileDialog(self)
             file_dialog.setNameFilter("Video Files (*.mp4 *.avi)")
             if file_dialog.exec_() == QFileDialog.Accepted:
                 file_path = file_dialog.selectedFiles()[0]
                 self.clip = VideoFileClip(file_path)
                 self.video = concatenate_videoclips([self.video,self.clip])
-            self.label_ubicacion.setText(self.file_path)
-            self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
             
     '''def open_route_file(self):
         file_dialog = QFileDialog(self)
@@ -117,7 +120,11 @@ class VideoEditor(QMainWindow):
                 self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
                 self.videovolume = self.video.volumex(volume)
                 self.video = self.videovolume
-
+                
+    def remove_audio(self):
+        if self.video is not None:
+            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+            self.video = self.video.without_audio()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
