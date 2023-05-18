@@ -77,6 +77,16 @@ class VideoEditor(QMainWindow):
             self.label_ubicacion.setText(self.guardado_archivo)'''
             
     def add_title(self):
+        
+        text = TextClip("LinuxHint", fontsize=75, color = "white")
+        text2 = text.set_pos("center").set_duration(3)
+
+        self.video = CompositeVideoClip([self.video, text2])
+        video2.write_videofile("texted.mp4")
+        
+        
+        """
+        
         if self.video is not None:
             title_text, ok = QInputDialog.getText(self, "Add Title", "Enter Title Text:")
             if ok:
@@ -84,6 +94,7 @@ class VideoEditor(QMainWindow):
                 video_with_title = CompositeVideoClip([self.video, title_clip.set_pos(('center', 'top'))])
                 self.video = video_with_title
                 self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+                """
     
     def gif(self):
         self.label_finalizado.setText("Procesando video...")
