@@ -151,12 +151,23 @@ class VideoEditor(QMainWindow):
     def accelerate(self):
         if self.video is not None:
             try:
-                resultado = QInputDialog.getText(self, "Accelerating", "por cuanto quieres acelerar el video")
+                resultado = QInputDialog.getText(self, "Accelerating", "¿Por cuanto quieres acelerar el video?")
                 aceleracion = int(resultado[0])
 
             except ValueError:
                 pass
             self.video = self.video.fx(vfx.speedx, aceleracion)
+            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+
+    def resize(self):
+        if self.video is not None:
+            try:
+                resultado = QInputDialog.getText(self, "Resizing", "¿A cuánto quieres modificar el tamaño del video?(Ingrese el Ancho)")
+                ancho = int(resultado[0])
+
+            except ValueError:
+                pass
+            self.video = self.video.fx(vfx.resize, width = ancho)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
                 
     def save_video(self):
