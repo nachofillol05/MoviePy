@@ -46,6 +46,10 @@ class VideoEditor(QMainWindow):
         self.accelerate_button.setGeometry(600, 260, 100, 30)
         self.accelerate_button.clicked.connect(self.accelerate)
         
+        self.accelerate_button = QPushButton("Resize", self)
+        self.accelerate_button.setGeometry(600, 200, 100, 30)
+        self.accelerate_button.clicked.connect(self.resize)
+        
         self.label_ubicacion = QLabel(self)
         self.label_ubicacion.setText("Ingrese la ruta del archivo")
         self.label_ubicacion.setGeometry(0, 10, 600, 30)
@@ -102,7 +106,21 @@ class VideoEditor(QMainWindow):
             except ValueError:
                 pass
             self.video = self.video.fx(vfx.speedx, aceleracion)
+            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
         
+        
+    def resize(self):
+        if self.video is not None:
+            try:
+                resultado = QInputDialog.getText(self, "resize", "a cuanto quieres modificar el tamaño del video")
+                ancho = int(resultado[0])
+                
+            except ValueError:
+                pass
+            self.video = self.video.fx(vfx.resize, width = ancho)
+            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+        
+    
         
 
     def open_clip_dialog(self):
@@ -115,12 +133,7 @@ class VideoEditor(QMainWindow):
                 self.clip = VideoFileClip(file_path)
                 self.video = concatenate_videoclips([self.video,self.clip])
             
-    '''def open_route_file(self):
-        file_dialog = QFileDialog(self)
-        if file_dialog.exec_() == QFileDialog.Accepted:
-            self.guardado_archivo = file_dialog.selectFile()
-            self.label_ubicacion.setText(self.guardado_archivo)'''
-            
+ 
    
     
     def gif(self):
