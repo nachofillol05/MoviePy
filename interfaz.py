@@ -9,14 +9,10 @@ class VideoEditor(QMainWindow):
         self.setWindowTitle("MoviePy Video Editor")
         self.setGeometry(100, 100, 800, 150)
         
-        self.play_button = QPushButton("Save", self)
-        self.play_button.setGeometry(50, 50, 100, 30)
-        self.play_button.clicked.connect(self.save_video)
+        self.save_button = QPushButton("Save", self)
+        self.save_button.setGeometry(50, 50, 100, 30)
+        self.save_button.clicked.connect(self.save_video)
         self.setGeometry(100, 100, 1000, 100)
-        
-        self.play_button = QPushButton("Play", self)
-        self.play_button.setGeometry(50, 50, 100, 30)
-        self.play_button.clicked.connect(self.play_video)
         
         self.title_button = QPushButton("Add Title", self)
         self.title_button.setGeometry(350, 50, 100, 30)
@@ -35,7 +31,7 @@ class VideoEditor(QMainWindow):
         self.open_button.clicked.connect(self.open_clip_dialog)
         
         self.label_ubicacion = QLabel(self)
-        self.label_ubicacion.setText("ingrese la ruta del archivo")
+        self.label_ubicacion.setText("Ingrese la ruta del archivo")
         self.label_ubicacion.setGeometry(150, 20, 500, 30)
         
         self.label_duracion = QLabel(self)
@@ -62,7 +58,7 @@ class VideoEditor(QMainWindow):
         if file_dialog.exec_() == QFileDialog.Accepted:
             self.file_path = file_dialog.selectedFiles()[0]
             self.video = VideoFileClip(self.file_path)
-# soy gay
+
     def open_clip_dialog(self):
         if self.video is not None:
             file_dialog = QFileDialog(self)
@@ -107,10 +103,6 @@ class VideoEditor(QMainWindow):
             if grados != 0:
                 print("lklegueeeeeeeee")
                 self.video = self.video.rotate(grados)
-                
-                    
-        
-                
                 
     def save_video(self):
         self.label_finalizado.setText("Procesando el video...")
