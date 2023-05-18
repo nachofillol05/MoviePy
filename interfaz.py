@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QWidget, QHBoxLay
 from PyQt5.QtGui import QPixmap
 import sys
 from moviepy.editor import *
-import moviepy
 
 class VideoEditor(QMainWindow):
     def __init__(self):
@@ -10,9 +9,9 @@ class VideoEditor(QMainWindow):
         self.setWindowTitle("MoviePy Video Editor")
         self.setGeometry(100, 100, 800, 150)
         
-        self.play_button = QPushButton("Save", self)
-        self.play_button.setGeometry(50, 50, 100, 30)
-        self.play_button.clicked.connect(self.save_video)
+        self.save_button = QPushButton("Save", self)
+        self.save_button.setGeometry(50, 50, 100, 30)
+        self.save_button.clicked.connect(self.save_video)
         
         self.title_button = QPushButton("Add Title", self)
         self.title_button.setGeometry(350, 50, 100, 30)
@@ -70,7 +69,7 @@ class VideoEditor(QMainWindow):
     
     
     def gif(self):
-        self.label_finalizado.setText("Procesando video...")
+        
         self.video.write_gif("gif.gif")
         self.label_finalizado.setText("Se termino de guardar el video")
     
@@ -86,6 +85,7 @@ class VideoEditor(QMainWindow):
             if grados != 0:
                 print("lklegueeeeeeeee")
                 self.video = self.video.rotate(grados)
+                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
                 
                     
         
@@ -96,7 +96,6 @@ class VideoEditor(QMainWindow):
         if self.video is not None:
             self.video.write_videofile("jose.mp4")
             self.label_finalizado.setText("Se termino de guardar el video")
-            self.video.preview()
             
             #without audio, cortar, 
 
