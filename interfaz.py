@@ -7,7 +7,7 @@ class VideoEditor(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("MoviePy Video Editor")
-        self.setGeometry(100, 100, 650, 520)
+        self.setGeometry(100, 100, 650, 670)
         
         self.save_button = QPushButton("Save", self)
         self.save_button.setGeometry(50, 100, 100, 30)
@@ -42,8 +42,12 @@ class VideoEditor(QMainWindow):
         self.resize_button.clicked.connect(self.resize)
 
         self.cut_button = QPushButton("Cut", self)
-        self.cut_button.setGeometry(350, 260, 100, 30)
+        self.cut_button.setGeometry(50, 550, 100, 30)
         self.cut_button.clicked.connect(self.cut)
+
+        self.aaccelerateccelerate_button = QPushButton("Accelerate", self)
+        self.accelerate_button.setGeometry(200, 550, 100, 30)
+        self.cut_button.clicked.connect(self.accelerate)
         
         self.rotate_button = QPushButton("Make gif", self)
         self.rotate_button.setGeometry(500, 100, 100, 30)
@@ -68,6 +72,14 @@ class VideoEditor(QMainWindow):
         self.label_audio = QLabel(self)
         self.label_audio.setText("Audio")
         self.label_audio.setGeometry(0, 343, 500, 30)
+
+        self.label_audio = QLabel(self)
+        self.label_audio.setText("Duración")
+        self.label_audio.setGeometry(0, 498, 500, 30)
+
+        self.label_linea4 = QLabel(self)
+        self.label_linea4.setText("________________________________________________________________________________________")
+        self.label_linea4.setGeometry(0, 475, 650, 30)
 
         self.label_linea1 = QLabel(self)
         self.label_linea1.setText("________________________________________________________________________________________")
