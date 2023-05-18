@@ -45,9 +45,9 @@ class VideoEditor(QMainWindow):
         self.cut_button.setGeometry(50, 550, 100, 30)
         self.cut_button.clicked.connect(self.cut)
 
-        self.aaccelerateccelerate_button = QPushButton("Accelerate", self)
+        self.accelerate_button = QPushButton("Accelerate", self)
         self.accelerate_button.setGeometry(200, 550, 100, 30)
-        self.cut_button.clicked.connect(self.accelerate)
+        self.accelerate_button.clicked.connect(self.accelerate)
         
         self.rotate_button = QPushButton("Make gif", self)
         self.rotate_button.setGeometry(500, 100, 100, 30)
@@ -144,6 +144,9 @@ class VideoEditor(QMainWindow):
                 self.video = self.video.rotate(grados)
 
     def cut(self):
+        print("xd")
+
+    def accelerate(self):
         print("xd")
                 
     def save_video(self):
