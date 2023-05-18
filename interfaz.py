@@ -7,19 +7,18 @@ class VideoEditor(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("MoviePy Video Editor")
-        self.setGeometry(100, 100, 800, 150)
+        self.setGeometry(100, 100, 1100, 150)
         
         self.save_button = QPushButton("Save", self)
         self.save_button.setGeometry(50, 50, 100, 30)
         self.save_button.clicked.connect(self.save_video)
-        self.setGeometry(100, 100, 1000, 100)
         
         self.title_button = QPushButton("Add Title", self)
         self.title_button.setGeometry(350, 50, 100, 30)
         self.title_button.clicked.connect(self.add_title)
         
         self.volume_button = QPushButton("Volume", self)
-        self.volume_button.setGeometry(650, 50, 100, 30)
+        self.volume_button.setGeometry(950, 50, 100, 30)
         self.volume_button.clicked.connect(self.open_volume_dialog)
                 
         self.open_button = QPushButton("Open", self)
@@ -58,6 +57,8 @@ class VideoEditor(QMainWindow):
         if file_dialog.exec_() == QFileDialog.Accepted:
             self.file_path = file_dialog.selectedFiles()[0]
             self.video = VideoFileClip(self.file_path)
+            self.label_ubicacion.setText(self.file_path)
+            self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
 
     def open_clip_dialog(self):
         if self.video is not None:
@@ -70,12 +71,11 @@ class VideoEditor(QMainWindow):
             self.label_ubicacion.setText(self.file_path)
             self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
             
-    def open_route_file(self):#VER FUNCIONNNNNNNNNN TODO IMPORTANTE
+    '''def open_route_file(self):
         file_dialog = QFileDialog(self)
         if file_dialog.exec_() == QFileDialog.Accepted:
             self.guardado_archivo = file_dialog.selectFile()
-            #self.video = VideoFileClip(self.guardado_archivo)
-            #self.label_ubicacion.setText(self.guardado_archivo)
+            self.label_ubicacion.setText(self.guardado_archivo)'''
             
     def add_title(self):
         if self.video is not None:
@@ -84,7 +84,7 @@ class VideoEditor(QMainWindow):
                 title_clip = TextClip(title_text, fontsize=70, color='white')
                 video_with_title = CompositeVideoClip([self.video, title_clip.set_pos(('center', 'top'))])
                 self.video = video_with_title
-    
+                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
     
     def gif(self):
         self.label_finalizado.setText("Procesando video...")
@@ -109,13 +109,14 @@ class VideoEditor(QMainWindow):
         if self.video is not None:
             self.video.write_videofile("jose.mp4")
             self.label_finalizado.setText("Se termino de guardar el video")
-            self.video.preview()
 
     def open_volume_dialog(self):
         if self.video is not None:
             volume, ok = QInputDialog.getText(self, "Change Volume", "Enter New Volume:")
             if ok:
-                self.video = self.video.volumex(volume)
+                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+                self.videovolume = self.video.volumex(volume)
+                self.video = self.videovolume
 
 
 if __name__ == "__main__":
