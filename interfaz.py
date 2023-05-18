@@ -2,11 +2,12 @@ from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QWidget, QHBoxLay
 from PyQt5.QtGui import QPixmap
 import sys
 from moviepy.editor import *
+import moviepy.video.fx.all as vfx
 
 class VideoEditor(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("MoviePy Video Editor")
+        self.setWindowTitle("Falmora Editor")
         self.setGeometry(100, 100, 650, 520)
         
         self.save_button = QPushButton("Save", self)
@@ -40,6 +41,10 @@ class VideoEditor(QMainWindow):
         self.rotate_button = QPushButton("Make gif", self)
         self.rotate_button.setGeometry(500, 100, 100, 30)
         self.rotate_button.clicked.connect(self.gif)
+        
+        self.accelerate_button = QPushButton("Accelerate", self)
+        self.accelerate_button.setGeometry(600, 260, 100, 30)
+        self.accelerate_button.clicked.connect(self.accelerate)
         
         self.label_ubicacion = QLabel(self)
         self.label_ubicacion.setText("Ingrese la ruta del archivo")
@@ -87,6 +92,18 @@ class VideoEditor(QMainWindow):
             self.video = VideoFileClip(self.file_path)
             self.label_ubicacion.setText(self.file_path)
             self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
+            
+    def accelerate(self):
+        if self.video is not None:
+            try:
+                resultado = QInputDialog.getText(self, "Accelerating", "por cuanto quieres acelerar el video")
+                aceleracion = int(resultado[0])
+                
+            except ValueError:
+                pass
+            self.video = self.video.fx(vfx.speedx, aceleracion)
+        
+        
 
     def open_clip_dialog(self):
         if self.video is not None:
@@ -104,25 +121,7 @@ class VideoEditor(QMainWindow):
             self.guardado_archivo = file_dialog.selectFile()
             self.label_ubicacion.setText(self.guardado_archivo)'''
             
-    def add_title(self):
-        
-        text = TextClip("LinuxHint", fontsize=75, color = "white")
-        text2 = text.set_pos("center").set_duration(3)
-
-        self.video = CompositeVideoClip([self.video, text2])
-        video2.write_videofile("texted.mp4")
-        
-        
-        """
-        
-        if self.video is not None:
-            title_text, ok = QInputDialog.getText(self, "Add Title", "Enter Title Text:")
-            if ok:
-                title_clip = TextClip(title_text, fontsize=70, color='white')
-                video_with_title = CompositeVideoClip([self.video, title_clip.set_pos(('center', 'top'))])
-                self.video = video_with_title
-                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
-                """
+   
     
     def gif(self):
         self.label_finalizado.setText("Procesando video...")
