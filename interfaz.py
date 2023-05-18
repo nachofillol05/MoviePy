@@ -59,7 +59,7 @@ class VideoEditor(QMainWindow):
         
         self.label_duracion = QLabel(self)
         self.label_duracion.setText("")
-        self.label_duracion.setGeometry(0, 450, 500, 30)
+        self.label_duracion.setGeometry(0, 600, 500, 30)
         
         self.label_archivo = QLabel(self)
         self.label_archivo.setText("Archivo")
@@ -95,7 +95,7 @@ class VideoEditor(QMainWindow):
 
         self.label_finalizado = QLabel(self)
         self.label_finalizado.setText("")
-        self.label_finalizado.setGeometry(0, 475, 650, 30)
+        self.label_finalizado.setGeometry(0, 625, 650, 30)
         
         self.video = None
     
@@ -125,9 +125,10 @@ class VideoEditor(QMainWindow):
             self.label_ubicacion.setText(self.guardado_archivo)'''
     
     def gif(self):
-        self.label_finalizado.setText("Procesando video...")
-        self.video.write_gif("gif.gif")
-        self.label_finalizado.setText("Se termino de guardar el video")
+        if self.video is not None:
+            self.label_finalizado.setText("Procesando video...")
+            self.video.write_gif("gif.gif")
+            self.label_finalizado.setText("Se termino de guardar el video")
     
     def rotate(self):
         grados = 0
@@ -144,26 +145,27 @@ class VideoEditor(QMainWindow):
                 self.video = self.video.rotate(grados)
 
     def cut(self):
-        print("xd")
+        if self.video is not None:
+            print("xd")
 
     def accelerate(self):
-        print("xd")
+        if self.video is not None:
+            print("xd")
                 
     def save_video(self):
-        self.label_finalizado.setText("Procesando el video...")
         if self.video is not None:
-            self.video.write_videofile("jose.mp4")
-            self.label_finalizado.setText("Se termino de guardar el video")
+            self.label_finalizado.setText("Procesando el video...")
+            if self.video is not None:
+                self.video.write_videofile("jose.mp4")
+                self.label_finalizado.setText("Se termino de guardar el video")
 
     def open_volume_dialog(self):
         if self.video is not None:
             try:
-                volume, ok = QInputDialog.getText(self, "Change Volume", "Enter New Volume:")
+                volm, ok = QInputDialog.getText(self, "Change Volume", "Enter New Volume:")
                 if ok:
                     self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
-                    self.audio = AudioFileClip(self.video)
-                    self.audio2 = self.audio.afx(vfx.volumex, volume)
-                    self.video = self.video.set_audio(self.audio2)
+                    self.video = self.video.volumex(int(volm))
             except ValueError:
                 print("Ingrese un numero")
                 
