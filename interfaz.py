@@ -212,7 +212,13 @@ class VideoEditor(QMainWindow):
                 """
     def fade(self):
         if self.video is not None:
+            rgb = []
             fade = QInputDialog.getText(self, "fade", "quieres hacer fade in(ingrese 0) o fade out(ingrese 1)")
+            color = QInputDialog.getText(self, "color", "Ingrese los colores R,G,B en ese orden separado por espacios por favor")
+            color_ls = color[0].split(" ")
+            for color in color_ls:
+                rgb.append(int(color))
+            print(rgb)
             try:
                 resultado = QInputDialog.getText(self, "duracion", "cuanto dura el fade")
                 duracion = int(resultado[0])
@@ -220,11 +226,11 @@ class VideoEditor(QMainWindow):
                 pass
             if fade[0] == "0":
                 print("entre fade in")
-                self.video = self.video.fx(vfx.fadein, duracion)
+                self.video = self.video.fx(vfx.fadein, duracion, rgb)
                 self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS") 
             if fade[0] == "1":
                 print("entre fade out")
-                self.video = self.video.fx(vfx.fadeout, duracion)
+                self.video = self.video.fx(vfx.fadeout, duracion, rgb)
                 self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS") 
                 
                    
