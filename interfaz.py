@@ -152,7 +152,7 @@ class VideoEditor(QMainWindow):
         if self.video is not None:
             try:
                 resultado = QInputDialog.getText(self, "Accelerating", "¿Por cuanto quieres acelerar el video?")
-                aceleracion = int(resultado[0])
+                aceleracion = float(resultado[0])
 
             except ValueError:
                 pass
