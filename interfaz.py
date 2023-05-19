@@ -7,13 +7,8 @@ import moviepy.video.fx.all as vfx
 class VideoEditor(QMainWindow):
     def __init__(self):
         super().__init__()
-<<<<<<< HEAD
         self.setWindowTitle("Falmora Editor")
-        self.setGeometry(100, 100, 650, 520)
-=======
-        self.setWindowTitle("MoviePy Video Editor")
         self.setGeometry(100, 100, 650, 670)
->>>>>>> 9b8b6a820463125947224a10887eee5837156482
         
         self.save_button = QPushButton("Save", self)
         self.save_button.setGeometry(50, 100, 100, 30)
@@ -22,7 +17,7 @@ class VideoEditor(QMainWindow):
         self.volume_button = QPushButton("Volume", self)
         self.volume_button.setGeometry(50, 400, 100, 30)
         self.volume_button.clicked.connect(self.open_volume_dialog)
-
+        
         self.newaudio_button = QPushButton("Set Audio", self)
         self.newaudio_button.setGeometry(200, 400, 100, 30)
         self.newaudio_button.clicked.connect(self.change_audio)
@@ -46,6 +41,10 @@ class VideoEditor(QMainWindow):
         self.resize_button = QPushButton("Resize", self)
         self.resize_button.setGeometry(200, 260, 100, 30)
         self.resize_button.clicked.connect(self.resize)
+        
+        self.blink_button = QPushButton("bw", self)
+        self.blink_button.setGeometry(350, 260, 100, 30)
+        self.blink_button.clicked.connect(self.blackWhite)
 
         self.cut_button = QPushButton("Cut", self)
         self.cut_button.setGeometry(50, 550, 100, 30)
@@ -55,17 +54,11 @@ class VideoEditor(QMainWindow):
         self.accelerate_button.setGeometry(200, 550, 100, 30)
         self.accelerate_button.clicked.connect(self.accelerate)
         
-        self.rotate_button = QPushButton("Make gif", self)
-        self.rotate_button.setGeometry(500, 100, 100, 30)
-        self.rotate_button.clicked.connect(self.gif)
+        self.gif_button = QPushButton("Make gif", self)
+        self.gif_button.setGeometry(500, 100, 100, 30)
+        self.gif_button.clicked.connect(self.gif)
         
-        self.accelerate_button = QPushButton("Accelerate", self)
-        self.accelerate_button.setGeometry(600, 260, 100, 30)
-        self.accelerate_button.clicked.connect(self.accelerate)
-        
-        self.accelerate_button = QPushButton("Resize", self)
-        self.accelerate_button.setGeometry(600, 200, 100, 30)
-        self.accelerate_button.clicked.connect(self.resize)
+       
         
         self.label_ubicacion = QLabel(self)
         self.label_ubicacion.setText("Ingrese la ruta del archivo")
@@ -137,7 +130,7 @@ class VideoEditor(QMainWindow):
     def resize(self):
         if self.video is not None:
             try:
-                resultado = QInputDialog.getText(self, "resize", "a cuanto quieres modificar el tamaño del video")
+                resultado = QInputDialog.getText(self, "resize", "a cuanto quieres modificar el tamaño del video(ingrese el ancho)")
                 ancho = int(resultado[0])
                 
             except ValueError:
@@ -158,22 +151,14 @@ class VideoEditor(QMainWindow):
                 self.clip = VideoFileClip(file_path)
                 self.video = concatenate_videoclips([self.video,self.clip])
             
-<<<<<<< HEAD
- 
-   
-=======
-    '''def open_route_file(self):
-        file_dialog = QFileDialog(self)
-        if file_dialog.exec_() == QFileDialog.Accepted:
-            self.guardado_archivo = file_dialog.selectFile()
-            self.label_ubicacion.setText(self.guardado_archivo)'''
->>>>>>> 9b8b6a820463125947224a10887eee5837156482
+
     
     def gif(self):
         if self.video is not None:
             self.label_finalizado.setText("Procesando video...")
             self.video.write_gif("gif.gif")
             self.label_finalizado.setText("Se termino de guardar el video")
+    
     
     def rotate(self):
         grados = 0
@@ -203,7 +188,28 @@ class VideoEditor(QMainWindow):
                 pass
             self.video = self.video.fx(vfx.speedx, aceleracion)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
-                
+    
+    def mirror_x(self):
+        if self.video is not None:
+            self.video = self.video.fx(vfx.mirror_x )
+            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+            
+            
+    def blackWhite(self):
+        
+        if self.video is not None:
+            self.video = self.video.fx(vfx.blackwhite)
+            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+        """if self.video is not None:
+            try:
+                resultado = QInputDialog.getText(self, "Accelerating", "por cuanto quieres acelerar el video")
+                aceleracion = int(resultado[0])
+
+            except ValueError:
+                pass
+            self.video = self.video.fx(vfx.speedx, aceleracion)
+            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+                """
     def save_video(self):
         if self.video is not None:
             self.label_finalizado.setText("Procesando el video...")
