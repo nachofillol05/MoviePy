@@ -121,6 +121,7 @@ class VideoEditor(QMainWindow):
         if file_dialog.exec_() == QFileDialog.Accepted:
             self.file_path = file_dialog.selectedFiles()[0]
             self.video = VideoFileClip(self.file_path)
+<<<<<<< HEAD
 
     def open_clip_dialog(self):
         if self.video is not None:
@@ -131,7 +132,10 @@ class VideoEditor(QMainWindow):
                 self.clip = VideoFileClip(file_path)
                 self.video = concatenate_videoclips([self.video,self.clip])
             self.label_ubicacion.setText(self.file_path)
+=======
+>>>>>>> Franco-Ceballos
             self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
+            self.label_ubicacion.setText(self.file_path)
 
     def open_clip_dialog(self):
         if self.video is not None:
@@ -142,6 +146,10 @@ class VideoEditor(QMainWindow):
                 file_path = file_dialog.selectedFiles()[0]
                 self.clip = VideoFileClip(file_path)
                 self.video = concatenate_videoclips([self.video,self.clip])
+<<<<<<< HEAD
+=======
+                self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
+>>>>>>> Franco-Ceballos
     
     def gif(self):
         if self.video is not None:
@@ -182,7 +190,42 @@ class VideoEditor(QMainWindow):
 
     def cut(self):
         if self.video is not None:
-            print("xd")
+            try:
+                resultado1 = QInputDialog.getText(self, "cut", "Entre que segundos quiere usted cortar el video Ingrese el primer numero unicamente: ")
+                seg1 = int(resultado1[0])
+                resultado2 = QInputDialog.getText(self, "cut", "Ingrese el segundo numero: ")
+                seg2 = int(resultado2[0])
+            except ValueError:
+                pass
+                print("Hubo un error ingrese los numeros de vuelta")
+            self.video = self.video.subclip(seg1,seg2)
+            self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
+            
+
+    def fade(self):
+        rgb = []
+        if self.video is not None:
+            fade = QInputDialog.getText(self, "fade", "¿Quiéres hacer Fade in(ingrese 0) o Fade out(ingrese 1)?")
+            color = QInputDialog.getText(self, "color", "Ingrese los colores R,G,B en ese orden separado por espacios por favor")
+            color_ls = color[0].split(" ")
+            try:
+                for color in color_ls:
+                    rgb.append(int(color))
+            except ValueError:
+                pass
+            try:
+                resultado = QInputDialog.getText(self, "duracion", "¿Cuánto durará el fade?")
+                duracion = int(resultado[0])
+            except ValueError:
+                pass
+            if fade[0] == "0":
+                print("Entre fade in")
+                self.video = self.video.fx(vfx.fadein, duracion, rgb)
+                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS") 
+            if fade[0] == "1":
+                print("Entre fade out")
+                self.video = self.video.fx(vfx.fadeout, duracion, rgb)
+                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
 
     def fade(self):
         rgb = []
@@ -218,6 +261,13 @@ class VideoEditor(QMainWindow):
             except ValueError:
                 pass
             self.video = self.video.fx(vfx.speedx, aceleracion)
+            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+            self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
+
+    def invertspeed(self):
+        if self.video is not None:
+            self.audio = self.video.fx(vfx.time_mirror).audio
+            self.video = self.video.set_audio(self.audio)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
 
     def invertspeed(self):
