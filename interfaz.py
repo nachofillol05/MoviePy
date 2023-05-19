@@ -121,17 +121,8 @@ class VideoEditor(QMainWindow):
         if file_dialog.exec_() == QFileDialog.Accepted:
             self.file_path = file_dialog.selectedFiles()[0]
             self.video = VideoFileClip(self.file_path)
-
-    def open_clip_dialog(self):
-        if self.video is not None:
-            file_dialog = QFileDialog(self)
-            file_dialog.setNameFilter("Video Files (*.mp4 *.avi)")
-            if file_dialog.exec_() == QFileDialog.Accepted:
-                file_path = file_dialog.selectedFiles()[0]
-                self.clip = VideoFileClip(file_path)
-                self.video = concatenate_videoclips([self.video,self.clip])
-            self.label_ubicacion.setText(self.file_path)
             self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
+            self.label_ubicacion.setText(self.file_path)
 
     def open_clip_dialog(self):
         if self.video is not None:
@@ -142,12 +133,7 @@ class VideoEditor(QMainWindow):
                 file_path = file_dialog.selectedFiles()[0]
                 self.clip = VideoFileClip(file_path)
                 self.video = concatenate_videoclips([self.video,self.clip])
-            
-    '''def open_route_file(self):
-        file_dialog = QFileDialog(self)
-        if file_dialog.exec_() == QFileDialog.Accepted:
-            self.guardado_archivo = file_dialog.selectFile()
-            self.label_ubicacion.setText(self.guardado_archivo)'''
+                self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
     
     def gif(self):
         if self.video is not None:
@@ -195,8 +181,9 @@ class VideoEditor(QMainWindow):
                 seg2 = int(resultado2[0])
             except ValueError:
                 pass
-                print("hubo un error ingrese los numeros de vuelta")
+                print("Hubo un error ingrese los numeros de vuelta")
             self.video = self.video.subclip(seg1,seg2)
+            self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
             
 
     def fade(self):
@@ -234,6 +221,7 @@ class VideoEditor(QMainWindow):
                 pass
             self.video = self.video.fx(vfx.speedx, aceleracion)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+            self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
 
     def invertspeed(self):
         if self.video is not None:
