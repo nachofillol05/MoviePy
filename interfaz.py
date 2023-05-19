@@ -121,19 +121,6 @@ class VideoEditor(QMainWindow):
         if file_dialog.exec_() == QFileDialog.Accepted:
             self.file_path = file_dialog.selectedFiles()[0]
             self.video = VideoFileClip(self.file_path)
-<<<<<<< HEAD
-
-    def open_clip_dialog(self):
-        if self.video is not None:
-            file_dialog = QFileDialog(self)
-            file_dialog.setNameFilter("Video Files (*.mp4 *.avi)")
-            if file_dialog.exec_() == QFileDialog.Accepted:
-                file_path = file_dialog.selectedFiles()[0]
-                self.clip = VideoFileClip(file_path)
-                self.video = concatenate_videoclips([self.video,self.clip])
-            self.label_ubicacion.setText(self.file_path)
-=======
->>>>>>> Franco-Ceballos
             self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
             self.label_ubicacion.setText(self.file_path)
 
@@ -146,10 +133,7 @@ class VideoEditor(QMainWindow):
                 file_path = file_dialog.selectedFiles()[0]
                 self.clip = VideoFileClip(file_path)
                 self.video = concatenate_videoclips([self.video,self.clip])
-<<<<<<< HEAD
-=======
                 self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
->>>>>>> Franco-Ceballos
     
     def gif(self):
         if self.video is not None:
