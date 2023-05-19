@@ -25,3 +25,5 @@ This changes include adjusting a video's scale, duration, speed and volume, alon
 ![Interfaz](/Interfaz.png "Una muestra de la interfaz de nuestro programa")
 ![Inodoro1](/PostEdicion.png "Un video antes de ser editado")
 ![Inodoro2](/PreEdicion.png "Un video despues de ser editado")
+
+![gatito](/gato.jpeg "foto de gato")
