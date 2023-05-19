@@ -57,8 +57,12 @@ class VideoEditor(QMainWindow):
         self.accelerate_button.setGeometry(200, 550, 100, 30)
         self.accelerate_button.clicked.connect(self.accelerate)
 
+        self.invertspeed_button = QPushButton("Invert Audio", self)
+        self.invertspeed_button.setGeometry(350, 550, 100, 30)
+        self.invertspeed_button.clicked.connect(self.invertspeed)
+
         self.fade_button = QPushButton("Add Fade", self)
-        self.fade_button.setGeometry(350, 550, 100, 30)
+        self.fade_button.setGeometry(500, 550, 100, 30)
         self.fade_button.clicked.connect(self.fade)
 
         self.rotate_button = QPushButton("Make gif", self)
@@ -187,8 +191,16 @@ class VideoEditor(QMainWindow):
             print("xd")
 
     def fade(self):
+        rgb = []
         if self.video is not None:
             fade = QInputDialog.getText(self, "fade", "¿Quiéres hacer Fade in(ingrese 0) o Fade out(ingrese 1)?")
+            color = QInputDialog.getText(self, "color", "Ingrese los colores R,G,B en ese orden separado por espacios por favor")
+            color_ls = color[0].split(" ")
+            try:
+                for color in color_ls:
+                    rgb.append(int(color))
+            except ValueError:
+                pass
             try:
                 resultado = QInputDialog.getText(self, "duracion", "¿Cuánto durará el fade?")
                 duracion = int(resultado[0])
@@ -196,11 +208,11 @@ class VideoEditor(QMainWindow):
                 pass
             if fade[0] == "0":
                 print("Entre fade in")
-                self.video = self.video.fx(vfx.fadein, duracion)
+                self.video = self.video.fx(vfx.fadein, duracion, rgb)
                 self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS") 
             if fade[0] == "1":
                 print("Entre fade out")
-                self.video = self.video.fx(vfx.fadeout, duracion)
+                self.video = self.video.fx(vfx.fadeout, duracion, rgb)
                 self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
 
     def accelerate(self):
@@ -212,6 +224,12 @@ class VideoEditor(QMainWindow):
             except ValueError:
                 pass
             self.video = self.video.fx(vfx.speedx, aceleracion)
+            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+
+    def invertspeed(self):
+        if self.video is not None:
+            self.audio = self.video.fx(vfx.time_mirror).audio
+            self.video = self.video.set_audio(self.audio)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
 
     def resize(self):
