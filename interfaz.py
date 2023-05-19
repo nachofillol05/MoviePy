@@ -42,9 +42,9 @@ class VideoEditor(QMainWindow):
         self.resize_button.setGeometry(200, 260, 100, 30)
         self.resize_button.clicked.connect(self.resize)
         
-        self.blink_button = QPushButton("bw", self)
+        self.blink_button = QPushButton("fade", self)
         self.blink_button.setGeometry(350, 260, 100, 30)
-        self.blink_button.clicked.connect(self.blackWhite)
+        self.blink_button.clicked.connect(self.fade)
 
         self.cut_button = QPushButton("Cut", self)
         self.cut_button.setGeometry(50, 550, 100, 30)
@@ -210,6 +210,25 @@ class VideoEditor(QMainWindow):
             self.video = self.video.fx(vfx.speedx, aceleracion)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
                 """
+    def fade(self):
+        if self.video is not None:
+            fade = QInputDialog.getText(self, "fade", "quieres hacer fade in(ingrese 0) o fade out(ingrese 1)")
+            try:
+                resultado = QInputDialog.getText(self, "duracion", "cuanto dura el fade")
+                duracion = int(resultado[0])
+            except ValueError:
+                pass
+            if fade[0] == "0":
+                print("entre fade in")
+                self.video = self.video.fx(vfx.fadein, duracion)
+                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS") 
+            if fade[0] == "1":
+                print("entre fade out")
+                self.video = self.video.fx(vfx.fadeout, duracion)
+                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS") 
+                
+                   
+                
     def save_video(self):
         if self.video is not None:
             self.label_finalizado.setText("Procesando el video...")
