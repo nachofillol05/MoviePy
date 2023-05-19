@@ -146,7 +146,16 @@ class VideoEditor(QMainWindow):
 
     def cut(self):
         if self.video is not None:
-            print("xd")
+            try:
+                resultado1 = QInputDialog.getText(self, "cut", "Entre que segundos quiere usted cortar el video Ingrese el primer numero unicamente: ")
+                seg1 = int(resultado1[0])
+                resultado2 = QInputDialog.getText(self, "cut", "Ingrese el segundo numero: ")
+                seg2 = int(resultado2[0])
+            except ValueError:
+                pass
+                print("hubo un error ingrese los numeros de vuelta")
+            self.video = self.video.subclip(seg1,seg2)
+            
 
     def accelerate(self):
         if self.video is not None:
