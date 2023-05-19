@@ -41,14 +41,26 @@ class VideoEditor(QMainWindow):
         self.resize_button.setGeometry(200, 260, 100, 30)
         self.resize_button.clicked.connect(self.resize)
 
+        self.mirror_button = QPushButton("Mirror", self)
+        self.mirror_button.setGeometry(350, 260, 100, 30)
+        self.mirror_button.clicked.connect(self.mirror_x)
+
+        self.monochrome_button = QPushButton("Monochrome", self)
+        self.monochrome_button.setGeometry(500, 260, 100, 30)
+        self.monochrome_button.clicked.connect(self.blackWhite)
+
         self.cut_button = QPushButton("Cut", self)
         self.cut_button.setGeometry(50, 550, 100, 30)
         self.cut_button.clicked.connect(self.cut)
 
-        self.accelerate_button = QPushButton("Accelerate", self)
+        self.accelerate_button = QPushButton("Speed", self)
         self.accelerate_button.setGeometry(200, 550, 100, 30)
         self.accelerate_button.clicked.connect(self.accelerate)
-        
+
+        self.fade_button = QPushButton("Add Fade", self)
+        self.fade_button.setGeometry(350, 550, 100, 30)
+        self.fade_button.clicked.connect(self.fade)
+
         self.rotate_button = QPushButton("Make gif", self)
         self.rotate_button.setGeometry(500, 100, 100, 30)
         self.rotate_button.clicked.connect(self.gif)
@@ -66,7 +78,7 @@ class VideoEditor(QMainWindow):
         self.label_archivo.setGeometry(0, 43, 500, 30)
 
         self.label_tamaño = QLabel(self)
-        self.label_tamaño.setText("Tamaño, Duración y Rotación")
+        self.label_tamaño.setText("Tamaño y Rotación")
         self.label_tamaño.setGeometry(0, 195, 500, 30)
 
         self.label_audio = QLabel(self)
@@ -74,7 +86,7 @@ class VideoEditor(QMainWindow):
         self.label_audio.setGeometry(0, 343, 500, 30)
 
         self.label_audio = QLabel(self)
-        self.label_audio.setText("Duración")
+        self.label_audio.setText("Duración y Transiciónes")
         self.label_audio.setGeometry(0, 498, 500, 30)
 
         self.label_linea4 = QLabel(self)
@@ -105,7 +117,7 @@ class VideoEditor(QMainWindow):
         if file_dialog.exec_() == QFileDialog.Accepted:
             self.file_path = file_dialog.selectedFiles()[0]
             self.video = VideoFileClip(self.file_path)
-# soy gay
+
     def open_clip_dialog(self):
         if self.video is not None:
             file_dialog = QFileDialog(self)
@@ -153,9 +165,43 @@ class VideoEditor(QMainWindow):
                 print("lklegueeeeeeeee")
                 self.video = self.video.rotate(grados)
 
+    def mirror_x(self):
+        if self.video is not None:
+            resultado = QInputDialog.getText(self, "Mirroring", "¿En que eje quieres aplicar el mirror (Ingrese x/y)?")
+            if str(resultado[0]) == "x" or str(resultado[0]) == "X":
+                self.video = self.video.fx(vfx.mirror_x )
+                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+            elif str(resultado[0]) == "y" or str(resultado[0]) == "Y":
+                self.video = self.video.fx(vfx.mirror_x )
+                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+            else:
+                print("Valor ingresado Incorrecto")
+
+    def blackWhite(self):
+        if self.video is not None:
+            self.video = self.video.fx(vfx.blackwhite)
+            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+
     def cut(self):
         if self.video is not None:
             print("xd")
+
+    def fade(self):
+        if self.video is not None:
+            fade = QInputDialog.getText(self, "fade", "¿Quiéres hacer Fade in(ingrese 0) o Fade out(ingrese 1)?")
+            try:
+                resultado = QInputDialog.getText(self, "duracion", "¿Cuánto durará el fade?")
+                duracion = int(resultado[0])
+            except ValueError:
+                pass
+            if fade[0] == "0":
+                print("Entre fade in")
+                self.video = self.video.fx(vfx.fadein, duracion)
+                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS") 
+            if fade[0] == "1":
+                print("Entre fade out")
+                self.video = self.video.fx(vfx.fadeout, duracion)
+                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
 
     def accelerate(self):
         if self.video is not None:
