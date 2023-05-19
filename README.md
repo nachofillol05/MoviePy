@@ -3,9 +3,7 @@ This is a scolar proyect using python with the MoviePy as a library
 ---
 ## Install
 ```console
-    pip install moviepy
-    pip install PyQt5
-    pip install pygame
+    pip install -r requirements.txt
 ```
 ### Description
 
