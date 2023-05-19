@@ -142,12 +142,6 @@ class VideoEditor(QMainWindow):
                 file_path = file_dialog.selectedFiles()[0]
                 self.clip = VideoFileClip(file_path)
                 self.video = concatenate_videoclips([self.video,self.clip])
-            
-    '''def open_route_file(self):
-        file_dialog = QFileDialog(self)
-        if file_dialog.exec_() == QFileDialog.Accepted:
-            self.guardado_archivo = file_dialog.selectFile()
-            self.label_ubicacion.setText(self.guardado_archivo)'''
     
     def gif(self):
         if self.video is not None:
