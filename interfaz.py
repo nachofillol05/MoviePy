@@ -114,7 +114,7 @@ class VideoEditor(QMainWindow):
         self.label_finalizado.setGeometry(0, 625, 650, 30)
         
         self.video = None
-    
+                
     def open_file_dialog(self):
         file_dialog = QFileDialog(self)
         file_dialog.setNameFilter("Video Files (*.mp4 *.avi)")
@@ -134,6 +134,7 @@ class VideoEditor(QMainWindow):
                 self.clip = VideoFileClip(file_path)
                 self.video = concatenate_videoclips([self.video,self.clip])
                 self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
+                self.label_cambios.setText(self.label_cambios.text() + "\n Clip añadido: " + file_path)
     
     def gif(self):
         if self.video is not None:
@@ -152,8 +153,8 @@ class VideoEditor(QMainWindow):
             except ValueError:
                 print("Ingrese un numero")
             if grados != 0:
-                print("lklegueeeeeeeee")
                 self.video = self.video.rotate(grados)
+                self.label_cambios.setText(self.label_cambios.text() + "\n Rotado en: " + grados + "grados")
 
     def mirror_x(self):
         if self.video is not None:
@@ -161,9 +162,11 @@ class VideoEditor(QMainWindow):
             if str(resultado[0]) == "x" or str(resultado[0]) == "X":
                 self.video = self.video.fx(vfx.mirror_x )
                 self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+                self.label_cambios.setText(self.label_cambios.text() + "\n Mirrorx")
             elif str(resultado[0]) == "y" or str(resultado[0]) == "Y":
                 self.video = self.video.fx(vfx.mirror_x )
                 self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+                self.label_cambios.setText(self.label_cambios.text() + "\n Mirrory")
             else:
                 print("Valor ingresado Incorrecto")
 
@@ -171,6 +174,7 @@ class VideoEditor(QMainWindow):
         if self.video is not None:
             self.video = self.video.fx(vfx.blackwhite)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+            self.label_cambios.setText(self.label_cambios.text() + "\n BlackWhite")
 
     def cut(self):
         if self.video is not None:
@@ -184,6 +188,7 @@ class VideoEditor(QMainWindow):
                 print("Hubo un error ingrese los numeros de vuelta")
             self.video = self.video.subclip(seg1,seg2)
             self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
+            self.label_cambios.setText(self.label_cambios.text() + "\n hubo un corte en el video del segundo: " + str(seg1) + "al:" + str(seg2))
             
 
     def fade(self):
@@ -203,13 +208,13 @@ class VideoEditor(QMainWindow):
             except ValueError:
                 pass
             if fade[0] == "0":
-                print("Entre fade in")
                 self.video = self.video.fx(vfx.fadein, duracion, rgb)
                 self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS") 
+                self.label_cambios.setText(self.label_cambios.text() + "\n fade in: dura" + str(duracion) + "color: " + str(color))
             if fade[0] == "1":
-                print("Entre fade out")
                 self.video = self.video.fx(vfx.fadeout, duracion, rgb)
                 self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+                self.label_cambios.setText(self.label_cambios.text() + "\n fade out: dura" + str(duracion) + "color: " + str(color))
 
     def accelerate(self):
         if self.video is not None:
@@ -222,12 +227,14 @@ class VideoEditor(QMainWindow):
             self.video = self.video.fx(vfx.speedx, aceleracion)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
             self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
+            self.label_cambios.setText(self.label_cambios.text() + "\n Accelerate: x" + str(aceleracion))
 
     def invertspeed(self):
         if self.video is not None:
             self.audio = self.video.fx(vfx.time_mirror).audio
             self.video = self.video.set_audio(self.audio)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+            self.label_cambios.setText(self.label_cambios.text() + "\nAudio invertido")
 
     def resize(self):
         if self.video is not None:
@@ -239,6 +246,7 @@ class VideoEditor(QMainWindow):
                 pass
             self.video = self.video.fx(vfx.resize, width = ancho)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+            self.label_cambios.setText(self.label_cambios.text() + "\n Cambio en el tamaño " + str(ancho))
                 
     def save_video(self):
         if self.video is not None:
@@ -254,6 +262,7 @@ class VideoEditor(QMainWindow):
                 if ok:
                     self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
                     self.video = self.video.volumex(int(volm))
+                    self.label_cambios.setText(self.label_cambios.text() + "\nVolumen multiplicado por" + str(volm))
             except ValueError:
                 print("Ingrese un numero")
                 
@@ -261,6 +270,7 @@ class VideoEditor(QMainWindow):
         if self.video is not None:
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
             self.video = self.video.without_audio()
+            self.label_cambios.setText(self.label_cambios.text() + "\n Audio removido")
 
     def change_audio(self):
         if self.video is not None:
@@ -271,6 +281,7 @@ class VideoEditor(QMainWindow):
                 self.audio = AudioFileClip(self.file_path)
                 self.video = self.video.set_audio(self.audio)
                 self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+                self.label_cambios.setText(self.label_cambios.text() + "\n Audio añadido: " + file_path)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
