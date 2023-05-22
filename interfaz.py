@@ -104,6 +104,10 @@ class VideoEditor(QMainWindow):
         self.label_finalizado.setText("")
         self.label_finalizado.setGeometry(0, 625, 650, 30)
         
+        self.label_cambios = QLabel(self)
+        self.label_cambios.setText("Cambios realizados:")
+        self.label_cambios.setGeometry(0, 650, 650, 30)
+        
         self.video = None
     
     def open_file_dialog(self):
@@ -115,16 +119,8 @@ class VideoEditor(QMainWindow):
             self.label_ubicacion.setText(self.file_path)
             self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
             
-    def accelerate(self):
-        if self.video is not None:
-            try:
-                resultado = QInputDialog.getText(self, "Accelerating", "por cuanto quieres acelerar el video")
-                aceleracion = int(resultado[0])
-                
-            except ValueError:
-                pass
-            self.video = self.video.fx(vfx.speedx, aceleracion)
-            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+
+            
         
         
     def resize(self):
@@ -188,6 +184,17 @@ class VideoEditor(QMainWindow):
                 pass
             self.video = self.video.fx(vfx.speedx, aceleracion)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
+            self.label_cambios.setText(self.label_cambios.text() + "\n Accelerate: x" + str(aceleracion))
+            self.label_cambios.setText(self.label_cambios.text() + "\n Mirrorx")
+            self.label_cambios.setText(self.label_cambios.text() + "\n Mirrory")
+            self.label_cambios.setText(self.label_cambios.text() + "\n BlackWhite")
+            self.label_cambios.setText(self.label_cambios.text() + "\n Audio removido")
+            self.label_cambios.setText(self.label_cambios.text() + "\n fade: dura" + str(duracion) + "color: " + str(color))
+            self.label_cambios.setText(self.label_cambios.text() + "\n Clip añadido: " + file_path)
+            self.label_cambios.setText(self.label_cambios.text() + "\n Audio añadido: " + file_path)
+            self.label_cambios.setText(self.label_cambios.text() + "\n Cambio en el tamaño " + str(año))
+            self.label_cambios.setText(self.label_cambios.text() + "\n hubo un corte en el video del segundo: " + str(seg1) + "al:" + str(seg2))
+
     
     def mirror_x(self):
         if self.video is not None:
@@ -216,9 +223,11 @@ class VideoEditor(QMainWindow):
             fade = QInputDialog.getText(self, "fade", "quieres hacer fade in(ingrese 0) o fade out(ingrese 1)")
             color = QInputDialog.getText(self, "color", "Ingrese los colores R,G,B en ese orden separado por espacios por favor")
             color_ls = color[0].split(" ")
-            for color in color_ls:
-                rgb.append(int(color))
-            print(rgb)
+            try:
+                for color in color_ls:
+                    rgb.append(int(color))
+            except ValueError:
+                pass
             try:
                 resultado = QInputDialog.getText(self, "duracion", "cuanto dura el fade")
                 duracion = int(resultado[0])
