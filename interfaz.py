@@ -58,11 +58,11 @@ class VideoEditor(QMainWindow):
         self.accelerate_button.clicked.connect(self.accelerate)
 
         self.invertspeed_button = QPushButton("Invert Audio", self)
-        self.invertspeed_button.setGeometry(350, 550, 100, 30)
+        self.invertspeed_button.setGeometry(500, 400, 100, 30)
         self.invertspeed_button.clicked.connect(self.invertspeed)
 
         self.fade_button = QPushButton("Add Fade", self)
-        self.fade_button.setGeometry(500, 550, 100, 30)
+        self.fade_button.setGeometry(350, 550, 100, 30)
         self.fade_button.clicked.connect(self.fade)
 
         self.rotate_button = QPushButton("Make gif", self)
@@ -247,12 +247,6 @@ class VideoEditor(QMainWindow):
             self.video = self.video.fx(vfx.speedx, aceleracion)
             self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
             self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
-
-    def invertspeed(self):
-        if self.video is not None:
-            self.audio = self.video.fx(vfx.time_mirror).audio
-            self.video = self.video.set_audio(self.audio)
-            self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
 
     def invertspeed(self):
         if self.video is not None:
