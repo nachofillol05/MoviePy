@@ -20,6 +20,6 @@ This changes include adjusting a video's scale, duration, speed and volume, alon
 
 
 ## Show Images
-![Interfaz](/Interfaz.png "Una muestra de la interfaz de nuestro programa")
-![Inodoro1](/PostEdicion.png "Un video antes de ser editado")
-![Inodoro2](/PreEdicion.png "Un video despues de ser editado")
+![Interfaz](/images/Interfaz.png "Una muestra de la interfaz de nuestro programa")
+![Inodoro1](/images/PostEdicion.png "Un video antes de ser editado")
+![Inodoro2](/images/PreEdicion.png "Un video despues de ser editado")
