@@ -18,8 +18,11 @@ This changes include adjusting a video's scale, duration, speed and volume, alon
 - Fillol Ignacio
 - Miller Derek
 
+### Issues
+- This project has a problem running in VS Code, Linux. It raises an error when you press the button "Save", but it will continue downloading your video so you only have to select the option "Wait" in the pop-up window displayed until it says that the video has been saved.
+
 
 ## Show Images
-![Interfaz](/images/Interfaz.png "Una muestra de la interfaz de nuestro programa")
+![Interfaz](/images/interfaz.png "Una muestra de la interfaz de nuestro programa")
 ![Inodoro1](/images/PostEdicion.png "Un video antes de ser editado")
 ![Inodoro2](/images/PreEdicion.png "Un video despues de ser editado")
