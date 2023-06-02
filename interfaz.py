@@ -138,7 +138,7 @@ class VideoEditor(QMainWindow):
     def gif(self):
         if self.video is not None:
             self.label_finalizado.setText("Procesando video...")
-            self.video.write_gif("gif.gif")
+            self.video.write_gif("gifGuardado.gif")
             self.label_finalizado.setText("Se termino de guardar el video")
     
     def rotate(self):
@@ -152,7 +152,6 @@ class VideoEditor(QMainWindow):
             except ValueError:
                 print("Ingrese un numero")
             if grados != 0:
-                print("lklegueeeeeeeee")
                 self.video = self.video.rotate(grados)
 
     def mirror_x(self):
@@ -269,7 +268,7 @@ class VideoEditor(QMainWindow):
         if self.video is not None:
             self.label_finalizado.setText("Procesando el video...")
             if self.video is not None:
-                self.video.write_videofile("jose.mp4")
+                self.video.write_videofile("VideoEditado.mp4")
                 self.label_finalizado.setText("Se termino de guardar el video")
 
     def open_volume_dialog(self):
