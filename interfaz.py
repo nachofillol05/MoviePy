@@ -138,7 +138,7 @@ class VideoEditor(QMainWindow):
     def gif(self):
         if self.video is not None:
             self.label_finalizado.setText("Procesando video...")
-            self.video.write_gif("gifGuardado.gif")
+            self.video.write_gif("GifEditado.gif")
             self.label_finalizado.setText("Se termino de guardar el video")
     
     def rotate(self):
@@ -183,32 +183,6 @@ class VideoEditor(QMainWindow):
                 print("Hubo un error ingrese los numeros de vuelta")
             self.video = self.video.subclip(seg1,seg2)
             self.label_duracion.setText("El video dura: " + str(self.video.duration) + " segundos")
-            
-
-    def fade(self):
-        rgb = []
-        if self.video is not None:
-            fade = QInputDialog.getText(self, "fade", "¿Quiéres hacer Fade in(ingrese 0) o Fade out(ingrese 1)?")
-            color = QInputDialog.getText(self, "color", "Ingrese los colores R,G,B en ese orden separado por espacios por favor")
-            color_ls = color[0].split(" ")
-            try:
-                for color in color_ls:
-                    rgb.append(int(color))
-            except ValueError:
-                pass
-            try:
-                resultado = QInputDialog.getText(self, "duracion", "¿Cuánto durará el fade?")
-                duracion = int(resultado[0])
-            except ValueError:
-                pass
-            if fade[0] == "0":
-                print("Entre fade in")
-                self.video = self.video.fx(vfx.fadein, duracion, rgb)
-                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS") 
-            if fade[0] == "1":
-                print("Entre fade out")
-                self.video = self.video.fx(vfx.fadeout, duracion, rgb)
-                self.label_finalizado.setText("NO CIERRE LA APLICACION O LOS CAMBIOS SERAN PERDIDOS")
 
     def fade(self):
         rgb = []
